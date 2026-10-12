@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f1e7">
+    <meta name="description" content="在线翻阅原神人物插图手册，含剧情与历史人物，同人AI插图、非官方出版、非商业免费下载。既有名单冻结于2026年7月26日。">
+    <title>原神角色手册 · 七国人物志</title>
+    <link rel="stylesheet" href="assets/site.css">
+    <script src="assets/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#reader">跳到手册阅读区</a>
+    <header class="masthead" id="masthead">
+      <a class="brand" href="#page=1" aria-label="原神角色手册，回到封面">
+        <span class="brand-mark" aria-hidden="true">✦</span>
+        <span>原神角色手册<small>TEYVAT · CHARACTER HANDBOOK</small></span>
+      </a>
+      <a class="header-download" href="#downloads">免费下载 <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <main id="main-content">
+      <section class="introduction" aria-labelledby="book-title">
+        <div class="intro-copy">
+          <p class="eyebrow"><span></span> A BOOK OF PEOPLE &amp; THEIR STORIES</p>
+          <h1 id="book-title">七国人物志</h1>
+          <p class="intro-line">沿着名字，翻开提瓦特。</p>
+          <p class="intro-description">从旅行者的同行者，到地域故事里的重要人物与古史身影。<br class="desktop-break">一本可以慢慢翻，也可以直接找到某个人的插图手册。</p>
+        </div>
+        <dl class="book-numbers" aria-label="手册规模">
+          <div><dt>人物档案</dt><dd id="character-count">—</dd></div>
+          <div><dt>地域与势力篇章</dt><dd id="chapter-count">—</dd></div>
+          <div><dt>完整页面</dt><dd id="page-count">—</dd></div>
+        </dl>
+      </section>
+
+      <div class="edition-strip" id="edition-strip">
+        <span class="edition-label" id="edition-label">2026-10 修订展示版</span>
+        <p id="scope-notice">收录包含剧情与历史人物；既有名单冻结于 2026-07-26，并非当前全部角色清单。</p>
+        <span class="spoiler-pill">含剧情剧透</span>
+      </div>
+
+      <section class="library" aria-label="在线手册">
+        <button class="drawer-backdrop" id="drawer-backdrop" aria-label="关闭目录" tabindex="-1" hidden></button>
+        <aside class="sidebar" id="sidebar" aria-labelledby="contents-heading">
+          <div class="sidebar-heading">
+            <div><p class="eyebrow">FIND YOUR WAY</p><h2 id="contents-heading">翻到你想看的故事</h2></div>
+            <button class="icon-button drawer-close" id="drawer-close" aria-label="关闭目录">×</button>
+          </div>
+          <label class="search-box" for="character-search">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 4.8 4.8"></path></svg>
+            <input id="character-search" type="search" placeholder="搜角色名、别名或章节" autocomplete="off" spellcheck="false">
+            <span class="visually-hidden">搜索角色名、别名或章节</span>
+          </label>
+          <div class="track-filter" role="group" aria-label="筛选手册篇章">
+            <button type="button" class="is-active" data-track="all" aria-pressed="true">全部</button>
+            <button type="button" data-track="A" aria-pressed="false">A 旅行志</button>
+            <button type="button" data-track="B" aria-pressed="false">B 遗珍录</button>
+          </div>
+          <div class="navigation-meta"><span id="navigation-label">章节目录</span><span id="navigation-count">—</span></div>
+          <p class="search-feedback visually-hidden" id="search-feedback" role="status"></p>
+          <nav class="navigation-list" id="navigation-list" aria-label="章节目录与角色搜索结果"></nav>
+          <div class="sidebar-footnote"><span class="tiny-star" aria-hidden="true">✦</span><p>A / B 是随章节变化的两种视觉风格。<br>人物与页序沿用这份手册的收录范围。</p></div>
+        </aside>
+
+        <div class="reading-column" id="reading-column">
+          <section class="reader" id="reader" aria-labelledby="current-title" tabindex="-1">
+            <div class="reader-heading">
+              <button class="contents-toggle" id="contents-toggle" aria-expanded="false" aria-controls="sidebar"><span aria-hidden="true">☰</span> 目录 / 搜索</button>
+              <div class="page-context"><span class="page-kind" id="page-kind">手册封面</span><h2 id="current-title">原神角色手册</h2></div>
+              <span class="track-badge" id="current-track" hidden></span>
+            </div>
+            <div class="page-stage" id="page-stage" aria-busy="true">
+              <div class="page-wrap" id="page-wrap"><img id="page-image" alt="" draggable="false" decoding="async" hidden></div>
+              <div class="reader-message" id="reader-message"><span class="loading-star" aria-hidden="true">✦</span><p id="reader-message-text">正在打开手册…</p><button class="quiet-button" id="retry-button" hidden>重新打开</button></div>
+              <div class="image-loading" id="image-loading" hidden><span aria-hidden="true">✦</span> 正在翻页</div>
+            </div>
+            <div class="reader-tools">
+              <div class="page-navigation">
+                <button class="turn-button" id="previous-page" aria-label="上一页" disabled><span aria-hidden="true">←</span><span class="turn-label">上一页</span></button>
+                <form class="page-jump" id="page-jump"><label class="visually-hidden" for="page-input">跳转到页码</label><input id="page-input" type="number" min="1" value="1" inputmode="numeric" aria-label="当前页码，输入后按回车跳转"><span aria-hidden="true">/</span><span id="page-total">—</span><button class="visually-hidden focus-reveal" type="submit">跳转</button></form>
+                <button class="turn-button" id="next-page" aria-label="下一页" disabled><span class="turn-label">下一页</span><span aria-hidden="true">→</span></button>
+              </div>
+              <div class="view-tools" role="group" aria-label="页面显示选项">
+                <button class="icon-button" id="zoom-out" aria-label="缩小页面" disabled>−</button>
+                <button class="zoom-value" id="zoom-reset" aria-label="恢复页面适应宽度">100%</button>
+                <button class="icon-button" id="zoom-in" aria-label="放大页面">＋</button>
+                <span class="tool-divider" aria-hidden="true"></span>
+                <button class="icon-button fullscreen-button" id="fullscreen-button" aria-label="全屏阅读"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M21 16v5h-5M8 21H3v-5"></path></svg></button>
+              </div>
+            </div>
+            <p class="reader-status" id="reader-status" role="status" aria-live="polite"></p>
+          </section>
+          <div class="reading-note"><p id="page-note"><span aria-hidden="true">✦</span> 可用左右方向键翻页；手机上可横屏阅读或放大查看。</p><div class="page-links"><span id="page-spoiler" hidden>本页含剧情剧透</span><nav id="character-sources" aria-label="当前人物资料" hidden></nav></div></div>
+          <section class="downloads" id="downloads" aria-labelledby="download-heading">
+            <div><p class="eyebrow">TAKE THE BOOK WITH YOU</p><h2 id="download-heading">把整本手册带走</h2><p>非商业免费下载，适合留存与教学展示。<br><a href="method.html">查看制作方法与可复制提示词 ↗</a></p></div>
+            <div class="download-links" id="download-links"><p class="download-pending">完整下载文件正在准备。</p></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="publication-note" aria-label="阅读与版权说明"><p>这是同人 AI 插图手册，非官方出版。收录包括可玩角色、剧情人物与历史人物，内容含剧情剧透。</p><p>人物资料入口供继续阅读与核对；部分百科页面较早，保留作阅读入口。本手册以资料整理为主，未对全部字段逐项完成官方资料核验。</p><p>原神 / HoYoverse 相关角色与作品权利归原权利人所有。本手册用于教学展示与非商业免费下载，不提供官方音频下载。</p><div id="additional-notices"></div></section>
+    </main>
+    <footer><span>一页一人 · 由名字进入故事</span><span>GENSHIN · AN ILLUSTRATED FAN HANDBOOK</span></footer>
+    <noscript><p class="noscript-note">请在浏览器开启 JavaScript，以查看在线手册与完整下载入口。</p></noscript>
+  </body>
+</html>
