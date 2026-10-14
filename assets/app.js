@@ -11,8 +11,7 @@
     zoomReset: $("zoom-reset"), fullscreen: $("fullscreen-button"), search: $("character-search"),
     navigation: $("navigation-list"), navigationLabel: $("navigation-label"), navigationCount: $("navigation-count"),
     searchFeedback: $("search-feedback"), sidebar: $("sidebar"), backdrop: $("drawer-backdrop"),
-    contentsToggle: $("contents-toggle"), drawerClose: $("drawer-close"), downloads: $("download-links"),
-    spoiler: $("page-spoiler"), sources: $("character-sources"), additionalNotices: $("additional-notices")
+    contentsToggle: $("contents-toggle"), drawerClose: $("drawer-close"), downloads: $("download-links")
   };
   const state = { book: null, slides: [], characters: [], chapters: [], page: 1, zoom: 1, track: "all", token: 0, drawerOpen: false, prefetched: new Set() };
   const smallScreen = window.matchMedia("(max-width: 900px)");
@@ -111,43 +110,6 @@
       link.append(copy, arrow);
       ui.downloads.append(link);
     }
-  }
-  function renderNotices(notices) {
-    ui.additionalNotices.replaceChildren();
-    if (!Array.isArray(notices)) return;
-    const existing = normalize($("scope-notice").textContent + document.querySelector(".publication-note").textContent);
-    for (const notice of notices) {
-      const value = typeof notice === "string" ? notice : text(notice?.text);
-      if (!value || existing.includes(normalize(value))) continue;
-      const paragraph = document.createElement("p");
-      paragraph.textContent = value;
-      ui.additionalNotices.append(paragraph);
-    }
-  }
-  function renderCharacterSources(character) {
-    ui.sources.replaceChildren();
-    const sources = [];
-    const seen = new Set();
-    if (Array.isArray(character?.sources)) {
-      for (const source of character.sources) {
-        const url = safeURL(source?.url);
-        if (!url || seen.has(url)) continue;
-        seen.add(url);
-        sources.push({ label: sources.length ? `资料来源 ${sources.length + 1}` : "资料来源", title: text(source.title, "人物资料来源"), url });
-      }
-    }
-    const fallback = safeURL(character?.sourceUrl);
-    if (fallback && !seen.has(fallback)) sources.push({ label: "百科资料", title: "人物百科资料，作为阅读入口", url: fallback });
-    for (const source of sources) {
-      const link = document.createElement("a");
-      link.href = source.url;
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-      link.title = source.title;
-      link.textContent = `${source.label} ↗`;
-      ui.sources.append(link);
-    }
-    ui.sources.hidden = !sources.length;
   }
   function makeNavigationButton({ title, subtitle, page, number, character, track }) {
     const button = document.createElement("button");
@@ -276,8 +238,6 @@
     ui.track.hidden = !["A", "B"].includes(slide.track);
     ui.track.textContent = slide.track === "A" ? "A · 提瓦特旅行志" : "B · 七国遗珍图录";
     ui.track.classList.toggle("track-b", slide.track === "B");
-    ui.spoiler.hidden = !(character?.spoiler || slide.spoiler);
-    renderCharacterSources(character);
     setZoom(1);
     if (updateHash) setHash(number);
     if (persist) savePage();
@@ -296,7 +256,7 @@
       ui.imageLoading.hidden = true;
       ui.stage.setAttribute("aria-busy", "false");
       ui.stage.classList.add("is-loaded");
-      announce(`第 ${number} 页，共 ${state.slides.length} 页。${ui.title.textContent}${ui.spoiler.hidden ? "" : "。本页包含剧情剧透"}`);
+      announce(`第 ${number} 页，共 ${state.slides.length} 页。${ui.title.textContent}${character?.spoiler || slide.spoiler ? "。本页包含剧情剧透" : ""}`);
       prefetchNext(number, token);
     };
     ui.image.onerror = () => {
@@ -362,12 +322,10 @@
       ui.input.max = String(data.slides.length);
       ui.total.textContent = String(data.slides.length);
       if (text(book.edition)) $("edition-label").textContent = book.edition;
-      if (text(book.cutoff)) $("scope-notice").textContent = `${data.characters.length} 人物含剧情与历史人物；既有名单冻结于 ${book.cutoff}，并非当前全部角色清单。`;
       $("book-title").textContent = text(book.title, "七国人物志");
       document.title = `${text(book.title, "原神角色手册")} · 七国人物志`;
-      document.querySelector('meta[name="description"]').content = `${text(book.title, "原神角色手册")}：${data.characters.length} 人物、${data.chapters.length} 章、${data.slides.length} 页。含剧情与历史人物，同人 AI 插图、非官方出版、非商业免费下载。既有名单冻结于 ${text(book.cutoff, "2026-07-26")}。`;
+      document.querySelector('meta[name="description"]').content = `${text(book.title, "原神角色手册")}：${data.characters.length} 人物、${data.chapters.length} 章、${data.slides.length} 页，可在线翻阅、搜索与免费下载。`;
       renderDownloads(book.downloads);
-      renderNotices(book.notices);
       renderNavigation();
       const firstPage = pageFromHash() ?? (slideForPage(readSavedPage()) ? readSavedPage() : 1);
       navigate(firstPage);

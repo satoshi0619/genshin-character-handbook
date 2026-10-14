@@ -10,6 +10,7 @@
 @media(max-width:360px){.page-navigation{gap:3px}.view-tools .icon-button{width:25px}.page-jump{gap:3px}.tool-divider{margin:0 1px}.zoom-value{min-width:35px}.reader-tools{gap:4px}.brand small{font-size:5px}}
 @media(orientation:landscape) and (max-height:600px){.page-stage{max-height:70vh}.page-stage.is-zoomed{height:70vh}.sidebar{padding-top:15px}.introduction{padding-top:23px;padding-bottom:23px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+.downloads{margin-top:24px}.edition-strip{justify-content:space-between}
 .page-links{display:flex;align-items:center;gap:11px;flex-wrap:wrap;justify-content:flex-end}.page-links>span{color:#96704a;white-space:nowrap}.page-links nav{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.page-links a{color:var(--green);text-decoration:none;border-bottom:1px solid #a2bba2;white-space:nowrap;line-height:1.7}.page-links a:hover{color:#164e44;border-color:var(--green)}
 @media(max-width:600px){.page-links{justify-content:flex-start;gap:8px}.page-links nav{gap:9px}}
 
@@ -91,4 +92,11 @@
   .publication-note{font-size:12px}
   footer{font-size:12px;letter-spacing:.01em;gap:8px}
   footer span:last-child{font-size:10px;letter-spacing:.02em}
+}
+footer.publication-note{display:block;margin:32px auto 27px;padding:23px 0 25px;font-size:12px;line-height:1.9;letter-spacing:normal}
+@media(max-width:600px){footer.publication-note{margin:22px auto 19px;padding:18px 0 20px}}
+@media(max-width:480px){
+  .download-links{flex-direction:column;align-items:stretch}
+  .download-link{width:100%;flex:none}
+  .download-link strong,.download-link small{white-space:nowrap}
 }
